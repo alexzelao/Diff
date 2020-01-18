@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package cq.srv.test.service;
+
+service Example {
+	rpc Call(Request) returns (Response) {}
+	rpc Stream(StreamingRequest) returns (stream StreamingResponse) {}
+	rpc PingPong(stream Ping) returns (stream Pong) {}
+	rpc Diff(diffRequest) returns (diffResponse) {}
+}
+
+message Message {
+	string say = 1;
+}
+
+message Request {
+	string name = 1;
+}
+
+message Response {
+	string msg = 1;
+}
+
+message diffRequest {
+	string original = 1;
+	string revised = 2;
+	string bincardoriginal = 3;
+	string bincardrevised = 4;
+	string locale = 5;
+}
+
+message diffResponse {
+	message Position {
+		int64 pos = 1;
+		int64 len = 2;
+	}
+	string symbols = 1;
+	repeated Position added = 2;
+	repeated Position deleted = 3;
+
+}
+
+message StreamingRequest {
+	int64 count = 1;
+}
+
+message StreamingResponse {
+	int64 count = 1;
+}
+
+message Ping {
+	int64 stroke = 1;
+}
+
+message Pong {
+	int64 stroke = 1;
+}
